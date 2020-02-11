@@ -1,12 +1,3 @@
-.gradle
-/build
-/buildSrc/build
-/buildSrc/subprojects/*/build
-/subprojects/*/build
-/subprojects/docs/src/samples/**/build
-/subprojects/docs/src/snippets/**/build
-/subprojects/internal-android-performance-testing/build-android-libs
-
 ### JetBrains template
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
