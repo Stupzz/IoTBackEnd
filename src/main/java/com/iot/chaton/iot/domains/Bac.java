@@ -11,8 +11,6 @@ public class Bac {
     @Id
     private Long id;
 
-    private List<Plante> plantes;
-
     private float tauxHumidite;
     private float tauxLuminosite;
     private float temperature;

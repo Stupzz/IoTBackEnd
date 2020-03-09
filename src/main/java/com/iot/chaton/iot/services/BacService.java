@@ -1,11 +1,14 @@
 package com.iot.chaton.iot.services;
 
 import com.iot.chaton.iot.domains.Bac;
-import com.iot.chaton.iot.domains.BacDto;
+import com.iot.chaton.iot.domains.BacSettingDto;
+import com.iot.chaton.iot.domains.CaptorBacDto;
 import com.iot.chaton.iot.exceptions.NotFoundException;
 import com.iot.chaton.iot.repositories.BacRepositorie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class BacService {
@@ -17,33 +20,52 @@ public class BacService {
         return bacRepositorie.findById(id).orElseThrow(() -> new NotFoundException("Aucun bac n'a était trouvé avec cet id"));
     }
 
-    public Bac createBacFromDto(BacDto bacDto){
+    public Bac createBacFromId(int idBac){
         Bac bac = new Bac();
-        bac.setId(bacDto.getId());
-        bac.setTauxHumiditeVoulu(bacDto.getTauxHumiditeVoulu());
-        bac.setTauxLuminositeVoulu(bacDto.getTauxLuminositeVoulu());
-        bac.setTemperatureVoulu(bacDto.getTemperatureVoulu());
+        bac.setId(Long.valueOf(idBac));
         return bac;
     }
 
-    public Bac updateVouluCaractFromDto(Bac bacToUpdate, BacDto bacDto){
+    public Bac createBacFromDto(BacSettingDto bacSettingDto){
+        Bac bac = new Bac();
+        bac.setId((long) bacSettingDto.getId());
+        bac.setTauxHumiditeVoulu(bacSettingDto.getTauxHumiditeVoulu());
+        bac.setTauxLuminositeVoulu(bacSettingDto.getTauxLuminositeVoulu());
+        bac.setTemperatureVoulu(bacSettingDto.getTemperatureVoulu());
+        return bac;
+    }
+
+    public Bac updateVouluCaractFromDto(Bac bacToUpdate, BacSettingDto bacSettingDto){
         /*
             Met à jour les caractéristiques voulu (qui déclenchera les leds) d'un bac
          */
-        if (bacDto.getTauxHumiditeVoulu().length == 2){
-            bacToUpdate.setTauxHumiditeVoulu(bacDto.getTauxHumiditeVoulu());
+        if (bacSettingDto.getTauxHumiditeVoulu().length == 2){
+            bacToUpdate.setTauxHumiditeVoulu(bacSettingDto.getTauxHumiditeVoulu());
         }
-        if (bacDto.getTauxLuminositeVoulu().length == 2){
-            bacToUpdate.setTauxLuminositeVoulu(bacDto.getTauxLuminositeVoulu());
+        if (bacSettingDto.getTauxLuminositeVoulu().length == 2){
+            bacToUpdate.setTauxLuminositeVoulu(bacSettingDto.getTauxLuminositeVoulu());
         }
-        if (bacDto.getTemperatureVoulu().length == 2){
-            bacToUpdate.setTemperatureVoulu(bacDto.getTemperatureVoulu());
+        if (bacSettingDto.getTemperatureVoulu().length == 2){
+            bacToUpdate.setTemperatureVoulu(bacSettingDto.getTemperatureVoulu());
         }
+        return bacToUpdate;
+    }
+
+
+    public Bac updateBacFromCaptorValueDto(Bac bacToUpdate, CaptorBacDto captorBacDto){
+        /*
+            Met à jour les taux d'u bac
+         */
+       bacToUpdate.setTauxHumidite(captorBacDto.getTauxHumidite());
+       bacToUpdate.setTauxLuminosite(captorBacDto.getTauxLuminosite());
+       bacToUpdate.setTemperature(captorBacDto.getTemperature());
         return bacToUpdate;
     }
 
     public Bac addOrEditOne(Bac bac){
         return bacRepositorie.save(bac);
     }
+
+    public List<Bac> getAllBac(){return bacRepositorie.findAll();}
 
 }
