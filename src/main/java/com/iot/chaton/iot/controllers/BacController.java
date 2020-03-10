@@ -33,7 +33,7 @@ public class BacController {
     }
 
     @PostMapping
-    public Bac addBac(@RequestBody int IdBac){
+    public Bac addBac(@RequestBody int IdBac) {
         Bac bac = bacService.createBacFromId(IdBac);
         return bacService.addOrEditOne(bac);
     }
@@ -55,7 +55,14 @@ public class BacController {
         Bac bac = getBacById(captorBacDto.getId());
         bacService.updateBacFromCaptorValueDto(bac, captorBacDto);
         bacService.addOrEditOne(bac);
-        historiqueService.addOrEditOne(new HistoriqueBac(captorBacDto.getId()));
+        historiqueService.addOrEditOne(
+                new HistoriqueBac(
+                        captorBacDto.getId(),
+                        captorBacDto.getTauxHumidite(),
+                        captorBacDto.getTauxLuminosite(),
+                        captorBacDto.getTemperature()
+                )
+        );
         return bacService.addOrEditOne(bac);
     }
 

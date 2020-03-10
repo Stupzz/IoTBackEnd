@@ -17,9 +17,16 @@ public class HistoriqueBacController {
 
     @GetMapping("{id}")
     public List<HistoriqueBac> getBacById(@PathVariable Long id) {
-        //mettre le cas de la demande de mail
         List<HistoriqueBac> historique = historiqueService.getAllbyBacId(id);
         Collections.sort(historique);
+        return historique;
+    }
+
+    @GetMapping("/mail/{id}")
+    public List<HistoriqueBac> sendHistoriqueByMail(@PathVariable Long id) {
+        List<HistoriqueBac> historique = historiqueService.getAllbyBacId(id);
+        Collections.sort(historique);
+        System.out.println("J'ENVOIE UN MAIL");
         return historique;
     }
 }

@@ -9,7 +9,6 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 public class HistoriqueBac implements Comparable<HistoriqueBac> {
-    @Id
     private Long bacId;
     private float tauxHumidite;
     private float tauxLuminosite;
